@@ -8,6 +8,8 @@ import edu.icet.service.BookTransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,7 +20,18 @@ public class BookTransactionServiceImpl implements BookTransactionService {
     @Override
     public Boolean saveBookTransaction(BookTransactionDto bookTransactionDto) {
         bookTransactionRepository.save(objectMapper.convertValue(bookTransactionDto, BookTransactionEntity.class));
-
         return true;
+    }
+
+    public List<BookTransactionDto> getBookTransactions(){
+        List<BookTransactionDto> bookTransactionDtoList=new ArrayList<>();
+        List<BookTransactionEntity> bookTransactionEntities = bookTransactionRepository.findAll();
+
+        bookTransactionEntities.forEach(bookTransactionEntity -> {
+            BookTransactionDto bookTransactionDto = objectMapper.convertValue(bookTransactionEntity, BookTransactionDto.class);
+            bookTransactionDtoList.add(bookTransactionDto);
+        });
+
+        return bookTransactionDtoList;
     }
 }

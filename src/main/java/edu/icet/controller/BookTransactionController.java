@@ -3,10 +3,8 @@ package edu.icet.controller;
 import edu.icet.dto.BookTransactionDto;
 import edu.icet.service.BookTransactionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 @RestController
 @CrossOrigin
@@ -17,5 +15,10 @@ public class BookTransactionController {
     @PostMapping("/book-transactions")
     public Boolean saveBookTransactions(@RequestBody BookTransactionDto bookTransactionDto){
         return bookTransactionService.saveBookTransaction(bookTransactionDto);
+    }
+
+    @GetMapping("/book-transactions")
+    public List<BookTransactionDto> getBookTransactionDtoList(){
+        return bookTransactionService.getBookTransactions();
     }
 }
